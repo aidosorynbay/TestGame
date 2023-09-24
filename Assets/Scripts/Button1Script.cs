@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Button1Script : MonoBehaviour
 {
     public GameObject cubePrefab; // Reference to the cube prefab.
-    private List<GameObject> cubes = new List<GameObject>();
+    public List<GameObject> cubes = new List<GameObject>();
     private Button button;
     public Transform cubeSpawnPoint; // Transform of the point where cubes will spawn.
 
@@ -34,18 +34,23 @@ public class Button1Script : MonoBehaviour
 
         for (int i = 0; i < numberOfCubes; i++)
         {
+            // Increment cubeCount before assigning it to the cube.
+            cubeCount++;
+    
             // Instantiate a cube prefab.
             GameObject cube = Instantiate(cubePrefab, GetRandomSpawnPosition(), Quaternion.identity);
 
             // Assign a random color to the cube.
             cube.GetComponent<Renderer>().material.color = Random.ColorHSV();
 
-            // Increment the cube count and display it on the cube.
-            cubeCount++;
+            // Display the incremented cubeCount on the cube.
             TextMeshPro textMeshPro = cube.transform.Find("Number").GetComponent<TextMeshPro>();
             textMeshPro.text = cubeCount.ToString();
+
+            // Add the cube to the cubes list.
             cubes.Add(cube);
         }
+
         button.interactable = false;
     }
 
