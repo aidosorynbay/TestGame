@@ -1,13 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class Button1Script : MonoBehaviour
 {
     public GameObject cubePrefab; // Reference to the cube prefab.
+    private List<GameObject> cubes = new List<GameObject>();
+    private Button button;
     public Transform cubeSpawnPoint; // Transform of the point where cubes will spawn.
 
     private int cubeCount = 0; // To keep track of the cube numbers.
+
+    private void Start()
+    {
+        // Get a reference to the Button component on this GameObject.
+        button = GetComponent<Button>();
+    }
 
     // Function to be called when Button1 is clicked.
     public void OnButton1Click()
@@ -32,8 +42,11 @@ public class Button1Script : MonoBehaviour
 
             // Increment the cube count and display it on the cube.
             cubeCount++;
-            cube.GetComponentInChildren<TextMesh>().text = cubeCount.ToString();
+            TextMeshPro textMeshPro = cube.transform.Find("Number").GetComponent<TextMeshPro>();
+            textMeshPro.text = cubeCount.ToString();
+            cubes.Add(cube);
         }
+        button.interactable = false;
     }
 
     // Function to get a random spawn position around the spawn point.
